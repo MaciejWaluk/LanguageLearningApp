@@ -13,6 +13,7 @@ module com.example.languagelearningapp {
 
     requires java.sql;
     requires org.xerial.sqlitejdbc;
+    requires static lombok;
 
     opens com.example.languagelearningapp to javafx.fxml;
     exports com.example.languagelearningapp;
