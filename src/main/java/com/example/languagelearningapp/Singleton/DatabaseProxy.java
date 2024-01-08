@@ -1,5 +1,6 @@
 package com.example.languagelearningapp.Singleton;
 
+import com.example.languagelearningapp.Builder.WordDirector;
 import com.example.languagelearningapp.Model.Word;
 
 import java.sql.ResultSet;
@@ -30,6 +31,8 @@ public class DatabaseProxy {
             System.out.println(e.getMessage());
         }
 
+        WordDirector wordDirector = new WordDirector();
+
         try {
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -37,7 +40,7 @@ public class DatabaseProxy {
                 String translation = rs.getString("translation");
                 String pronunciation = rs.getString("pronunciation");
                 String language = rs.getString("language");
-                words.add(new Word(id, word, translation, pronunciation, language));
+                words.add(wordDirector.constructWordWithPronunciation(id, word, translation, language, pronunciation));
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -103,6 +106,36 @@ public class DatabaseProxy {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public List<Word> getWordsByLanguage(String language) {
+        initializeConnection();
+        Statement stmt = null;
+        List<Word> words = new ArrayList<>();
+        ResultSet rs = null;
+        try {
+            stmt = this.databaseConnection.getConn().createStatement();
+            String sql = "SELECT * FROM words WHERE language = '" + language + "'";
+            rs = stmt.executeQuery(sql);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        WordDirector wordDirector = new WordDirector();
+
+        try {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String word = rs.getString("word");
+                String translation = rs.getString("translation");
+                String pronunciation = rs.getString("pronunciation");
+                words.add(wordDirector.constructWordWithPronunciation(id, word, translation, language, pronunciation));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return words;
     }
 
 

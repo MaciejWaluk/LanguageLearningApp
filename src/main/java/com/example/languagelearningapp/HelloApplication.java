@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HelloApplication extends Application {
     @Override
@@ -19,7 +21,13 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
-        DatabaseProxy databaseProxy = new DatabaseProxy();
+        DatabaseProxy db = new DatabaseProxy();
+        List<Word> words = db.getWords();
+        for(Word word : words) {
+            System.out.println(word);
+        }
+
+
     }
 
     public static void main(String[] args) {

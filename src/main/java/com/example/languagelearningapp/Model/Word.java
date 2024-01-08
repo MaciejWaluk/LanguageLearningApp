@@ -1,13 +1,12 @@
 package com.example.languagelearningapp.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import java.awt.Image;
+import lombok.*;
 
+import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-@Getter @Setter @AllArgsConstructor
+@Getter @Setter @RequiredArgsConstructor @ToString
 public class Word {
 
     @NonNull
@@ -17,9 +16,10 @@ public class Word {
     @NonNull
     private String translation;
     @NonNull
-    private String pronunciation;
-    @NonNull
     private String language;
+
+    private String pronunciation = null;
+    private BufferedImage image = null;
 
 
 }
