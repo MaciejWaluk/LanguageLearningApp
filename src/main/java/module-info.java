@@ -20,4 +20,7 @@ module com.example.languagelearningapp {
     exports com.example.languagelearningapp;
     exports com.example.languagelearningapp.Builder;
     opens com.example.languagelearningapp.Builder to javafx.fxml;
+
+    exports com.example.languagelearningapp.Controllers to javafx.fxml;
+    opens com.example.languagelearningapp.Controllers to javafx.fxml;
 }

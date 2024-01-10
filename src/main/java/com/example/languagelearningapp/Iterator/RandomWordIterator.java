@@ -1,10 +1,13 @@
 package com.example.languagelearningapp.Iterator;
 
 import com.example.languagelearningapp.Model.Word;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collections;
 import java.util.List;
 
+@Getter @Setter
 public class RandomWordIterator implements WordIterator{
 
     private int position;

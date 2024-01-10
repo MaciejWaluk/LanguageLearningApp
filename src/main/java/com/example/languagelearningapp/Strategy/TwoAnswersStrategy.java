@@ -2,7 +2,7 @@ package com.example.languagelearningapp.Strategy;
 
 import com.example.languagelearningapp.Model.Word;
 import com.example.languagelearningapp.Singleton.DatabaseProxy;
-import com.example.languagelearningapp.State.LanguageState;
+import com.example.languagelearningapp.State.LanguageState.LanguageState;
 
 import java.util.ArrayList;
 import java.util.Collections;

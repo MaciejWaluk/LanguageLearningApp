@@ -33,6 +33,4 @@ public class WordDirector {
                 .setImage(image)
                 .build();
     }
-
-
 }

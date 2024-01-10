@@ -1,4 +1,4 @@
-package com.example.languagelearningapp.State;
+package com.example.languagelearningapp.State.LanguageState;
 
 import com.example.languagelearningapp.Model.Word;
 import com.example.languagelearningapp.Singleton.DatabaseProxy;

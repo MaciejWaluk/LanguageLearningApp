@@ -1,0 +1,24 @@
+.letfAnchor {
+    -fx-background-color: #1A6E59;
+}
+
+.menu-button{
+    -fx-border-radius: 5px;
+    -fx-background-color: #259C7E;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 10px;
+    -fx-font-weight: bold;
+}
+
+.menu-button:hover{
+    -fx-background-color: #2FC49F;
+}
+
+.menu-button:pressed{
+    -fx-background-color: #39EDC0;
+}
+
+.start-game{
+    -fx-background-color: #1A6E59;
+}
+
