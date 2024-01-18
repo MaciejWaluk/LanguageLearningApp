@@ -30,7 +30,7 @@ public class MainMenuController {
 
     @FXML
     void startButtonClicked(ActionEvent event) throws IOException {
-        SceneSwitchUtil.switchScene("start-game.fxml", (Stage) settingsButton.getScene().getWindow());
+//        SceneSwitchUtil.switchScene("start-game.fxml", (Stage) settingsButton.getScene().getWindow());
 
     }
 

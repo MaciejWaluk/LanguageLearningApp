@@ -1,24 +1,36 @@
 .letfAnchor {
-    -fx-background-color: #1A6E59;
+    -fx-background-color: #161616;
 }
 
 .menu-button{
     -fx-border-radius: 5px;
-    -fx-background-color: #259C7E;
+    -fx-background-color: #454545;
     -fx-text-fill: #FFFFFF;
     -fx-padding: 10px;
     -fx-font-weight: bold;
 }
 
 .menu-button:hover{
-    -fx-background-color: #2FC49F;
+    -fx-background-color: #969696;
 }
 
 .menu-button:pressed{
-    -fx-background-color: #39EDC0;
+    -fx-background-color: #BFBFBF;
 }
 
-.start-game{
-    -fx-background-color: #1A6E59;
+.answer-button{
+    -fx-border-radius: 5px;
+    -fx-border-color: #161616;
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #161616;
+    -fx-padding: 10px;
+    -fx-font-weight: bold;
+}
+
+
+.word-frame{
+    -fx-background-color: #FFFFFF;
+    -fx-border-radius: 15px;
+    -fx-padding: 10px;
 }
 

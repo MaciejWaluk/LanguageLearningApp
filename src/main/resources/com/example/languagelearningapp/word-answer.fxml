@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="CENTER" prefHeight="500.0" prefWidth="217.0" spacing="15.0" styleClass="letfAnchor" stylesheets="@../../../style.css">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="126.0" styleClass="menu-button" stylesheets="@../../../style.css" text="Główne menu" />
+            <Button layoutX="56.0" layoutY="242.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="126.0" styleClass="menu-button" stylesheets="@../../../style.css" text="Zapisz grę" />
+            <Button layoutX="56.0" layoutY="260.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="126.0" styleClass="menu-button" stylesheets="@../../../style.css" text="Ustawienia" />
+            <Button layoutX="56.0" layoutY="279.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="126.0" styleClass="menu-button" stylesheets="@../../../style.css" text="Wyjdź" />
+         </children>
+      </VBox>
+      <AnchorPane layoutX="296.0" layoutY="105.0" prefHeight="290.0" prefWidth="304.0" styleClass="word-frame" stylesheets="@../../../style.css">
+         <children>
+            <Label layoutX="155.0" layoutY="14.0" text="Słowo">
+               <font>
+                  <Font name="System Bold" size="27.0" />
+               </font>
+            </Label>
+            <HBox layoutX="15.0" layoutY="177.0" prefHeight="37.0" prefWidth="353.0" spacing="15.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="126.0" styleClass="answer-button" stylesheets="@../../../style.css" text="Główne menu" />
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="126.0" styleClass="answer-button" stylesheets="@../../../style.css" text="Główne menu" />
+                  <Button layoutX="110.0" layoutY="10.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="126.0" styleClass="answer-button" stylesheets="@../../../style.css" text="Główne menu" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="15.0" layoutY="230.0" prefHeight="37.0" prefWidth="353.0" spacing="15.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="105.0" styleClass="answer-button" stylesheets="@../../../style.css" text="Główne menu" />
+                  <Button layoutX="110.0" layoutY="10.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="105.0" styleClass="answer-button" stylesheets="@../../../style.css" text="Główne menu" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <HBox alignment="CENTER" layoutX="313.0" layoutY="422.0" prefHeight="37.0" prefWidth="353.0" spacing="20.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="105.0" styleClass="menu-button" stylesheets="@../../../style.css" text="Podpowiedź" />
+            <Button layoutX="110.0" layoutY="10.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="105.0" styleClass="menu-button" stylesheets="@../../../style.css" text="Następne " />
+         </children>
+      </HBox>
+      <Label layoutX="296.0" layoutY="24.0" text="1/20">
+         <font>
+            <Font name="System Bold" size="31.0" />
+         </font>
+      </Label>
+      <Label layoutX="475.0" layoutY="31.0" text="Pozostały czas: ">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="636.0" layoutY="31.0" text="120s">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
