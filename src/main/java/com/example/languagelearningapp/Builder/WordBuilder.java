@@ -11,7 +11,6 @@ public interface WordBuilder {
     public WordBuilder setWord(String word);
     public WordBuilder setTranslation(String translation);
     public WordBuilder setLanguage(String language);
-    public WordBuilder setPronunciation(String pronunciation);
-    public WordBuilder setImage(BufferedImage image);
+    public WordBuilder setHint(String hint);
     public Word build();
 }

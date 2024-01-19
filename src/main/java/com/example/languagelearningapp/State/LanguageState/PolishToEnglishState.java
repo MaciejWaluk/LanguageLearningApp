@@ -8,11 +8,11 @@ import java.util.List;
 public class PolishToEnglishState implements LanguageState{
     @Override
     public String getLanguage() {
-        return "polish";
+        return "Polish";
     }
 
     @Override
     public List<Word> getWordsList(DatabaseProxy databaseProxy) {
-        return databaseProxy.getWordsByLanguage("polish");
+        return databaseProxy.getWordsByLanguage("Polish");
     }
 }

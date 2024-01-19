@@ -1,12 +1,16 @@
 package com.example.languagelearningapp;
 
 import com.example.languagelearningapp.Controllers.SceneSwitchUtil;
+import com.example.languagelearningapp.Game.Hint;
+import com.example.languagelearningapp.Model.Word;
+import com.example.languagelearningapp.Singleton.DatabaseProxy;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MainApplication extends Application {
     @Override

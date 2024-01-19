@@ -9,11 +9,11 @@ public class EnglishToPolishState implements LanguageState{
 
     @Override
     public String getLanguage() {
-        return "english";
+        return "English";
     }
 
     @Override
     public List<Word> getWordsList(DatabaseProxy databaseProxy) {
-        return databaseProxy.getWordsByLanguage("english");
+        return databaseProxy.getWordsByLanguage("English");
     }
 }

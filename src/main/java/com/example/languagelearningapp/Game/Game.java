@@ -4,12 +4,15 @@ import com.example.languagelearningapp.Controllers.SceneSwitchUtil;
 import com.example.languagelearningapp.Model.Word;
 import com.example.languagelearningapp.Observer.TimeObserver;
 import com.example.languagelearningapp.Singleton.DatabaseProxy;
+import com.example.languagelearningapp.State.LanguageState.EnglishToPolishState;
 import com.example.languagelearningapp.State.LanguageState.LanguageState;
+import com.example.languagelearningapp.State.LanguageState.PolishToEnglishState;
 import com.example.languagelearningapp.State.ProgramState.LearningProgramState;
 import com.example.languagelearningapp.State.ProgramState.ProgramState;
 import com.example.languagelearningapp.State.ProgramState.TestProgramState;
 import com.example.languagelearningapp.Strategy.*;
 import javafx.stage.Stage;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,18 +28,34 @@ public class Game {
     private int currentWordIndex;
     private Difficulty difficulty;
     private Mode mode;
+    private Language language;
     private AnswersStrategy answersStrategy;
     private LanguageState languageState;
     private ProgramState programState;
     private Stage stage;
 
+    public static Game instance;
 
-    public Game(LanguageState languageState, Stage stage) {
+
+    private Game() {
         difficulty = Difficulty.BEGINNER;
-        this.languageState = languageState;
         mode = Mode.LEARNING;
-        this.stage = stage;
+        language = Language.POL;
+
+        databaseProxy = new DatabaseProxy();
     }
+
+    public static Game getInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+        return instance;
+    }
+
+
+
+
+
 
     public void update(TimeObserver timeObserver) throws IOException {
         if(programState instanceof TestProgramState) {
@@ -66,7 +85,6 @@ public class Game {
     }
 
     public void startGame(){
-        wordsList = languageState.getWordsList(databaseProxy);
         switch(difficulty) {
             case BEGINNER:
                 answersStrategy = new TwoAnswersStrategy();
@@ -85,6 +103,17 @@ public class Game {
                 break;
         }
 
+        switch(language){
+            case POL:
+                languageState = new PolishToEnglishState();
+                break;
+            case ENG:
+                languageState = new EnglishToPolishState();
+                break;
+        }
+
+        wordsList = languageState.getWordsList(databaseProxy);
+
         switch(mode) {
             case LEARNING:
                 programState = new LearningProgramState(wordsList);
@@ -97,16 +126,16 @@ public class Game {
         if(programState instanceof TestProgramState)
             ((TestProgramState) programState).startTimer();
 
-        nextWord();
+
 
     }
 
-    public void nextWord(){
+    public List<Word> nextWord(){
         Word word = programState.getNextWord();
         currentWordIndex = wordsList.indexOf(word);
-        List<Word> answers;
-        if(difficulty != Difficulty.EXPERT)
-            answers = answersStrategy.createAnswers(word, languageState);
+        List<Word> answers = answersStrategy.createAnswers(word, languageState);;
+        answers.add(word);
+        return answers;
     }
 
 

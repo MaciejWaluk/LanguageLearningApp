@@ -6,7 +6,7 @@ import lombok.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-@Getter @Setter @RequiredArgsConstructor @ToString
+@Getter @Setter @RequiredArgsConstructor @AllArgsConstructor @ToString
 public class Word {
 
     @NonNull
@@ -17,9 +17,9 @@ public class Word {
     private String translation;
     @NonNull
     private String language;
+    private String pronunciation;
+    private String imageUrl;
 
-    private String pronunciation = null;
-    private BufferedImage image = null;
 
 
 }

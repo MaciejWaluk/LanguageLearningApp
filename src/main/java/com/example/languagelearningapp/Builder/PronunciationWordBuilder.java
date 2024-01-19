@@ -10,7 +10,7 @@ public class PronunciationWordBuilder implements WordBuilder{
     private String word;
     private String translation;
     private String language;
-    private String pronunciation;
+    private String hint;
     @Override
     public WordBuilder setId(int id) {
         this.id = id;
@@ -35,20 +35,16 @@ public class PronunciationWordBuilder implements WordBuilder{
         return this;
     }
 
-    public WordBuilder setPronunciation(String pronunciation) {
-        this.pronunciation = pronunciation;
+    @Override
+    public WordBuilder setHint(String hint) {
+        this.hint = hint;
         return this;
     }
 
-    @Override
-    public WordBuilder setImage(BufferedImage image) {
-        return this;
-    }
 
     @Override
     public Word build() {
-        Word word = new Word(this.id, this.word, this.translation, this.language);
-        word.setPronunciation(this.pronunciation);
+        Word word = new Word(this.id, this.word, this.translation, this.language, this.hint, null);
         return word;
     }
 }

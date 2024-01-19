@@ -11,7 +11,7 @@ public class PictureWordBuilder implements WordBuilder {
     private String word;
     private String translation;
     private String language;
-    private BufferedImage image;
+    private String hint;
 
     @Override
     public WordBuilder setId(int id) {
@@ -38,19 +38,15 @@ public class PictureWordBuilder implements WordBuilder {
     }
 
     @Override
-    public WordBuilder setPronunciation(String pronunciation) {
+    public WordBuilder setHint(String hint) {
+        this.hint = hint;
         return this;
     }
 
-    public WordBuilder setImage(BufferedImage image) {
-        this.image = image;
-        return this;
-    }
 
     @Override
     public Word build() {
-        Word word = new Word(this.id, this.word, this.translation, this.language);
-        word.setImage(this.image);
+        Word word = new Word(this.id, this.word, this.translation, this.language,null, "/resources/images/" + this.word + ".jpg");
         return word;
     }
 }

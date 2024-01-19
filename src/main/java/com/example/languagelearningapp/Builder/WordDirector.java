@@ -18,11 +18,11 @@ public class WordDirector {
                 .setWord(word)
                 .setTranslation(translation)
                 .setLanguage(language)
-                .setPronunciation(pronunciation)
+                .setHint(pronunciation)
                 .build();
     }
 
-    public Word constructWordWithPicture(int id, String word, String translation, String language, BufferedImage image) {
+    public Word constructWordWithPicture(int id, String word, String translation, String language, String imageUrl) {
         if(pictureWordBuilder == null) {
             pictureWordBuilder = new PictureWordBuilder();
         }
@@ -30,7 +30,7 @@ public class WordDirector {
                 .setWord(word)
                 .setTranslation(translation)
                 .setLanguage(language)
-                .setImage(image)
+                .setHint(imageUrl)
                 .build();
     }
 }
