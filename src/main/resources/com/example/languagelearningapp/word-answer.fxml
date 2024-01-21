@@ -121,5 +121,6 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
+      <Button fx:id="sortButton" disable="true" layoutX="45.0" layoutY="422.0" mnemonicParsing="false" onAction="#sortButtonClicked" prefHeight="37.0" prefWidth="126.0" styleClass="menu-button" stylesheets="@../../../style.css" text="Kolejność: losowa" />
    </children>
 </AnchorPane>

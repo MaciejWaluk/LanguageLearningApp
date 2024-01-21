@@ -12,7 +12,7 @@ public class FiveAnswersStrategy implements AnswersStrategy{
     public List<Word> createAnswers(Word word, LanguageState languageState) {
         DatabaseProxy databaseProxy = new DatabaseProxy();
         List<Word> words = languageState.getWordsList(databaseProxy);
-        words.remove(word);
+        words.removeIf(w -> w.getWord().equals(word.getWord()));
         Collections.shuffle(words);
 
         List<Word> result = words.subList(0, 4);

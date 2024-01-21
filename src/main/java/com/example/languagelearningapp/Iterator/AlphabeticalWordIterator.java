@@ -37,6 +37,11 @@ public class AlphabeticalWordIterator implements WordIterator{
     }
 
     @Override
+    public void resetPosition() {
+        position = 0;
+    }
+
+    @Override
     public WordIterator clone(List<Word> wordsList, int position) {
         AlphabeticalWordIterator newIterator = new AlphabeticalWordIterator();
         newIterator.setWords(wordsList);

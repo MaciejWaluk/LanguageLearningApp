@@ -1,5 +1,6 @@
 package com.example.languagelearningapp.Controllers;
 
+import com.example.languagelearningapp.Builder.WordDirector;
 import com.example.languagelearningapp.Game.Game;
 import com.example.languagelearningapp.Model.Word;
 import com.example.languagelearningapp.Singleton.DatabaseProxy;
@@ -15,7 +16,7 @@ import lombok.Data;
 
 import java.io.IOException;
 
-public class SettingsController {
+public class SettingsController implements Alerts{
 
     @FXML
     private Button exitButton, mainMenuButton, addWordButton, deleteWordButton, saveWordsButton, updateWordButton;
@@ -32,7 +33,11 @@ public class SettingsController {
     @FXML
     private TextField pronunciationTextField, translationTextField, wordTextField;
 
+    @FXML
+    private Label hintLabel;
+
     DatabaseProxy databaseProxy;
+    WordDirector wordDirector;
     private ObservableList<Word> wordList = FXCollections.observableArrayList();
 
     @FXML
@@ -43,6 +48,8 @@ public class SettingsController {
         pronunciationColumn.setCellValueFactory(new PropertyValueFactory<>("pronunciation"));
         urlColumn.setCellValueFactory(new PropertyValueFactory<>("imageUrl"));
 
+        wordDirector = new WordDirector();
+
         databaseProxy = new DatabaseProxy();
         wordList.addAll(databaseProxy.getAllWords());
 
@@ -50,12 +57,27 @@ public class SettingsController {
 
         languageChoiceBox.getItems().addAll("Angielski", "Polski");
 
+        languageChoiceBox.setOnAction((event) -> {
+            if(languageChoiceBox.getValue().equals("Angielski")) {
+                hintLabel.setText("Link do obrazka:");
+            } else {
+                hintLabel.setText("Wymowa:");
+            }
+        });
+
         tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 wordTextField.setText(newSelection.getWord());
                 translationTextField.setText(newSelection.getTranslation());
-                pronunciationTextField.setText(newSelection.getPronunciation());
                 languageChoiceBox.setValue(newSelection.getLanguage().equals("English") ? "Angielski" : "Polski");
+                if(newSelection.getLanguage().equals("English")) {
+                    hintLabel.setText("Link do obrazka:");
+                    pronunciationTextField.setText(newSelection.getImageUrl());
+                } else {
+                    hintLabel.setText("Wymowa:");
+                    pronunciationTextField.setText(newSelection.getPronunciation());
+
+                }
             }
         });
     }
@@ -78,17 +100,15 @@ public class SettingsController {
     void addWordButtonClicked(ActionEvent event) {
         String word = wordTextField.getText().toLowerCase();
         String translation = translationTextField.getText().toLowerCase();
-        String language = languageChoiceBox.getValue().equals("Angielski") ? "English" : "Polish";
-        String pronunciation = pronunciationTextField.getText().toLowerCase();
+        String language = languageChoiceBox.getValue();
+        String hint = pronunciationTextField.getText().toLowerCase();
 
-        if(word.isEmpty() || translation.isEmpty() || language.isEmpty() || pronunciation.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Błąd");
-            alert.setHeaderText("Niepoprawne dane");
-            alert.setContentText("Wszystkie pola muszą być wypełnione");
-            alert.showAndWait();
+        if(word.isEmpty() || translation.isEmpty() || language.isEmpty() || hint.isEmpty() || languageChoiceBox.getValue() == null) {
+            Alerts.showAlert("Błąd", "Wszystkie pola muszą być wypełnione");
         } else {
-            Word newWord = new Word(0, word, translation, language, pronunciation, "url");
+            language = language.equals("Angielski") ? "English" : "Polish";
+            Word newWord = language.equals("English") ? wordDirector.constructWordWithPicture(0, word, translation, language, hint) :
+                    wordDirector.constructWordWithPronunciation(0, word, translation, language, hint);
             wordList.add(newWord);
             wordTextField.clear();
             translationTextField.clear();
@@ -103,11 +123,7 @@ public class SettingsController {
         if(selectedWord != null) {
             wordList.remove(selectedWord);
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Błąd");
-            alert.setHeaderText("Nie wybrano słowa");
-            alert.setContentText("Musisz wybrać słowo, które chcesz usunąć");
-            alert.showAndWait();
+            Alerts.showAlert("Błąd", "Musisz wybrać słowo, które chcesz usunąć");
         }
 
     }
@@ -115,7 +131,10 @@ public class SettingsController {
     @FXML
     void saveWordsButtonClicked(ActionEvent event) {
         databaseProxy.saveAllWords(wordList);
+        Alerts.showAlert("Zapisano słowa", "Słowa zostały zapisane w bazie danych");
     }
+
+
 
     @FXML
     void updateWordButtonClicked(ActionEvent event) {
@@ -124,29 +143,27 @@ public class SettingsController {
             String word = wordTextField.getText().toLowerCase();
             String translation = translationTextField.getText().toLowerCase();
             String language = languageChoiceBox.getValue().equals("Angielski") ? "English" : "Polish";
-            String pronunciation = pronunciationTextField.getText().toLowerCase();
+            String hint = pronunciationTextField.getText().toLowerCase();
 
-            if(word.isEmpty() || translation.isEmpty() || language.isEmpty() || pronunciation.isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Błąd");
-                alert.setHeaderText("Niepoprawne dane");
-                alert.setContentText("Wszystkie pola muszą być wypełnione");
-                alert.showAndWait();
+            if(word.isEmpty() || translation.isEmpty() || language.isEmpty() || hint.isEmpty() || languageChoiceBox.getValue() == null) {
+                Alerts.showAlert("Błąd", "Wszystkie pola muszą być wypełnione");
             } else {
                 selectedWord.setWord(word);
                 selectedWord.setTranslation(translation);
                 selectedWord.setLanguage(language);
-                selectedWord.setPronunciation(pronunciation);
+                if(language.equals("English")) {
+                    selectedWord.setImageUrl(hint);
+                    selectedWord.setPronunciation("null");
+                } else {
+                    selectedWord.setPronunciation(hint);
+                    selectedWord.setImageUrl("null");
+                }
                 wordTextField.clear();
                 translationTextField.clear();
                 pronunciationTextField.clear();
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Błąd");
-            alert.setHeaderText("Nie wybrano słowa");
-            alert.setContentText("Musisz wybrać słowo, które chcesz zaktualizować");
-            alert.showAndWait();
+            Alerts.showAlert("Błąd", "Musisz wybrać słowo, które chcesz zaktualizować");
         }
 
     }

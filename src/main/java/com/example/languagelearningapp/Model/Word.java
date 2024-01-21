@@ -20,7 +20,6 @@ public class Word implements Cloneable{
     private String pronunciation;
     private String imageUrl;
 
-    // Deep Copy Constructor
     public Word(Word other) {
         this.id = other.id;
         this.word = other.word;

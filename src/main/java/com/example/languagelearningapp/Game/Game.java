@@ -1,5 +1,6 @@
 package com.example.languagelearningapp.Game;
 
+import com.example.languagelearningapp.Builder.WordBuilder;
 import com.example.languagelearningapp.Controllers.SceneSwitchUtil;
 import com.example.languagelearningapp.Memento.GameCaretaker;
 import com.example.languagelearningapp.Memento.GameMemento;
@@ -36,6 +37,7 @@ public class Game {
     private LanguageState languageState;
     private ProgramState programState;
     private Stage stage;
+    @Setter
     private TimeUpdateListener timeUpdateListener;
     private GameCaretaker gameCaretaker;
     private List<Word> answers;
@@ -58,10 +60,6 @@ public class Game {
             instance = new Game();
         }
         return instance;
-    }
-
-    public void setTimeUpdateListener(TimeUpdateListener listener) {
-        this.timeUpdateListener = listener;
     }
 
     public void update(TimeObserver timeObserver) throws IOException {
@@ -164,14 +162,8 @@ public class Game {
 
         switch(language){
             case POL:
-                if(wordsList.get(currentWordIndex).getPronunciation() == null){
-                    wordsList.set(currentWordIndex, databaseProxy.getWordWithPronunciation(wordsList.get(currentWordIndex)));
-                }
                 return wordsList.get(currentWordIndex).getPronunciation();
             case ENG:
-                if(wordsList.get(currentWordIndex).getImageUrl() == null){
-                    wordsList.set(currentWordIndex, databaseProxy.getWordWithImageUrl(wordsList.get(currentWordIndex)));
-                }
                 return wordsList.get(currentWordIndex).getImageUrl();
             default:
                 return "";

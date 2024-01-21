@@ -8,5 +8,6 @@ public interface WordIterator {
     public boolean hasNext();
     public Word next();
     public int getPosition();
+    public void resetPosition();
     public WordIterator clone(List<Word> wordsList, int position);
 }

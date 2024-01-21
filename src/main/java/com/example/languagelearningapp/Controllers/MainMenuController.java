@@ -6,12 +6,13 @@ import com.example.languagelearningapp.Game.Language;
 import com.example.languagelearningapp.Game.Mode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainMenuController {
+public class MainMenuController implements Alerts{
 
     @FXML private Button difficultyButton, exitButton, languageButton, modeButton, settingsButton, startButton, loadGameButton;
 
@@ -65,7 +66,12 @@ public class MainMenuController {
     @FXML
     void loadGameButtonClicked(ActionEvent event) throws IOException {
         Game game = Game.getInstance();
-        game.restoreFromMemento(game.getGameCaretaker().restoreState());
+        try {
+            game.restoreFromMemento(game.getGameCaretaker().restoreState());
+        } catch (Exception e) {
+            Alerts.showAlert("Błąd", "Nie można wczytać gry");
+            return;
+        }
         SceneSwitchUtil.switchScene("word-answer.fxml", (Stage) loadGameButton.getScene().getWindow());
 
     }

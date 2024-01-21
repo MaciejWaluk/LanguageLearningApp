@@ -7,15 +7,14 @@ import java.util.List;
 import java.util.Stack;
 
 public class GameCaretaker {
-    private final Stack<GameMemento> mementos = new Stack<>();
+    private GameMemento gameMemento;
 
     public void saveState(Game game) {
-//        mementos.add(new GameMemento(game));
-        mementos.push(new GameMemento(game));
+        gameMemento = new GameMemento(game);
     }
 
     public GameMemento restoreState() {
-        return mementos.pop();
+        return gameMemento;
     }
 
 

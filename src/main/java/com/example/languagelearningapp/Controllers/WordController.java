@@ -5,6 +5,8 @@ import com.example.languagelearningapp.Game.Game;
 import com.example.languagelearningapp.Game.Mode;
 import com.example.languagelearningapp.Model.Word;
 import com.example.languagelearningapp.Observer.TimeUpdateListener;
+import com.example.languagelearningapp.State.ProgramState.LearningProgramState;
+import com.example.languagelearningapp.State.ProgramState.ProgramState;
 import com.example.languagelearningapp.State.ProgramState.TestProgramState;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -22,10 +24,10 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.List;
 
-public class WordController implements TimeUpdateListener {
+public class WordController implements TimeUpdateListener, Alerts {
 
     @FXML private ToggleGroup answerGroup;
-    @FXML private Button exitButton, hintButton, mainMenuButton, nextButton, saveGameButton, settingsButton;
+    @FXML private Button exitButton, hintButton, mainMenuButton, nextButton, saveGameButton, settingsButton, sortButton;
     @FXML private VBox fiveWordsBox, fourWordsBox;
     @FXML private HBox threeWordsBox, twoWordsBox;
     @FXML private ToggleButton fiveWordsFiveButton, fiveWordsFourButton, fiveWordsOneButton, fiveWordsThreeButton, fiveWordsTwoButton;
@@ -70,6 +72,7 @@ public class WordController implements TimeUpdateListener {
             timeLabel.setVisible(false);
             questionNumberLabel.setVisible(false);
             timeDescriptionLabel.setVisible(false);
+            sortButton.setDisable(false);
         }
         else {
             saveGameButton.setDisable(true);
@@ -145,13 +148,18 @@ public class WordController implements TimeUpdateListener {
         SceneSwitchUtil.switchScene("main-menu.fxml", (Stage) mainMenuButton.getScene().getWindow());
     }
 
-    public void nextWord() throws IOException {
+    public void nextWord(){
         hintLabel.setText("");
         hintImageView.setImage(null);
         answerTextField.clear();
         answers = game.nextWord();
-        if(answers==null)
-            SceneSwitchUtil.switchScene("end-test.fxml", (Stage) timeLabel.getScene().getWindow());
+        if(answers==null) {
+            try {
+                SceneSwitchUtil.switchScene("end-test.fxml", (Stage) timeLabel.getScene().getWindow());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         else
             setWord(answers.get(answers.size() - 1));
 
@@ -163,8 +171,13 @@ public class WordController implements TimeUpdateListener {
 
 
         if(game.getDifficulty() == Difficulty.EXPERT){
+            if(answerTextField.getText().trim().isEmpty()){
+                Alerts.showAlert("Błąd", "Wpisz odpowiedź");
+                return;
+            }
             if(game.getMode() == Mode.LEARNING){
                 String answer = answerTextField.getText();
+
                 Boolean isCorrect = game.checkAnswer(answer.toLowerCase());
                 if(isCorrect){
                     nextWord();
@@ -191,18 +204,23 @@ public class WordController implements TimeUpdateListener {
         }
         else{
             ToggleButton selectedButton = (ToggleButton) answerGroup.getSelectedToggle();
+
+            if(selectedButton == null){
+                Alerts.showAlert("Błąd", "Wybierz odpowiedź");
+                return;
+            }
             String answer = selectedButton.getText();
             Boolean isCorrect = game.checkAnswer(answer);
 
             switch(game.getMode()){
                 case LEARNING:
                     if (isCorrect) {
-                        changeButtonStyle(selectedButton, "answer-button-correct");
-                        nextWord();
+                        changeButtonStyle(selectedButton, "answer-button-correct", this::nextWord);
+                    } else {
+                        changeButtonStyle(selectedButton, "answer-button-wrong", () -> {});
+                        // The lambda is empty for the wrong answer as you may not want to load the next word immediately
                     }
-                    else {
-                        changeButtonStyle(selectedButton, "answer-button-wrong");
-                    }
+
                     break;
                 case TEST:
                     if(isCorrect){
@@ -218,7 +236,8 @@ public class WordController implements TimeUpdateListener {
 
     }
 
-    public void changeButtonStyle(ToggleButton selectedButton, String styleClass) {
+
+    public void changeButtonStyle(ToggleButton selectedButton, String styleClass, Runnable afterStyleChange) {
         selectedButton.getStyleClass().clear();
         selectedButton.getStyleClass().add(styleClass);
 
@@ -226,9 +245,11 @@ public class WordController implements TimeUpdateListener {
         pause.setOnFinished(ev -> {
             selectedButton.getStyleClass().clear();
             selectedButton.getStyleClass().add("answer-button");
+            afterStyleChange.run();
         });
         pause.play();
     }
+
 
     @FXML
     void saveGameButtonClicked(ActionEvent event) {
@@ -245,6 +266,17 @@ public class WordController implements TimeUpdateListener {
     @FXML
     void settingsButtonClicked(ActionEvent event) throws IOException {
         SceneSwitchUtil.switchScene("settings.fxml", (Stage) settingsButton.getScene().getWindow());
+
+    }
+
+    @FXML
+    void sortButtonClicked(ActionEvent event) throws IOException {
+        LearningProgramState programState = (LearningProgramState) game.getProgramState();
+        programState.changeWordIterator();
+        sortButton.setText(sortButton.getText().equals("Kolejność: losowa") ? "Kolejność: alfabetyczna" : "Kolejność: losowa");
+        ((LearningProgramState) game.getProgramState()).getWordIterator().resetPosition();
+        nextWord();
+
 
     }
 

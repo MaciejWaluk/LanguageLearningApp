@@ -13,7 +13,7 @@ public class TwoAnswersStrategy implements AnswersStrategy{
     public List<Word> createAnswers(Word word, LanguageState languageState) {
         DatabaseProxy databaseProxy = new DatabaseProxy();
         List<Word> words = languageState.getWordsList(databaseProxy);
-        words.remove(word);
+        words.removeIf(w -> w.getWord().equals(word.getWord()));
         Collections.shuffle(words);
 
         List<Word> result = new ArrayList<>();

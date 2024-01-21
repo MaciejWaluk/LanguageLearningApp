@@ -36,6 +36,11 @@ public class RandomWordIterator implements WordIterator{
     }
 
     @Override
+    public void resetPosition() {
+        position = 0;
+    }
+
+    @Override
     public WordIterator clone(List<Word> wordsList, int position) {
         RandomWordIterator newIterator = new RandomWordIterator();
         newIterator.setWords(wordsList);

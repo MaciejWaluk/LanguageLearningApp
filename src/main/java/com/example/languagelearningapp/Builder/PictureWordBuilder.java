@@ -43,10 +43,9 @@ public class PictureWordBuilder implements WordBuilder {
         return this;
     }
 
-
     @Override
     public Word build() {
-        Word word = new Word(this.id, this.word, this.translation, this.language,null, "/resources/images/" + this.word + ".jpg");
+        Word word = new Word(this.id, this.word, this.translation, this.language,null, this.hint);
         return word;
     }
 }
