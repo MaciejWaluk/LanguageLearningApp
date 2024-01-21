@@ -29,13 +29,13 @@ public class GameMemento {
     private final List<Word> answers;
 
     public GameMemento(Game game) {
-        this.wordsList = ListCopyUtil.copyList(game.getWordsList()); // Deep copy if necessary
+        this.wordsList = ListCopyUtil.copyList(game.getWordsList());
         this.currentWordIndex = game.getCurrentWordIndex();
         this.difficulty = game.getDifficulty();
         this.mode = game.getMode();
         this.language = game.getLanguage();
-        this.answersStrategy = game.getAnswersStrategy(); // Clone or deep copy if mutable
-        this.languageState = game.getLanguageState(); // Clone or deep copy if mutable
+        this.answersStrategy = game.getAnswersStrategy();
+        this.languageState = game.getLanguageState();
         this.answers = ListCopyUtil.copyList(game.getAnswers());
 
         int iteratorIndex = ((LearningProgramState) game.getProgramState()).getWordIterator().getPosition();
