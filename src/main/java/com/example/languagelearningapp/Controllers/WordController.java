@@ -1,109 +1,52 @@
 package com.example.languagelearningapp.Controllers;
 
+import com.example.languagelearningapp.Game.Difficulty;
 import com.example.languagelearningapp.Game.Game;
 import com.example.languagelearningapp.Game.Mode;
 import com.example.languagelearningapp.Model.Word;
+import com.example.languagelearningapp.Observer.TimeUpdateListener;
+import com.example.languagelearningapp.State.ProgramState.TestProgramState;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.List;
 
-public class WordController {
+public class WordController implements TimeUpdateListener {
 
+    @FXML private ToggleGroup answerGroup;
+    @FXML private Button exitButton, hintButton, mainMenuButton, nextButton, saveGameButton, settingsButton;
+    @FXML private VBox fiveWordsBox, fourWordsBox;
+    @FXML private HBox threeWordsBox, twoWordsBox;
+    @FXML private ToggleButton fiveWordsFiveButton, fiveWordsFourButton, fiveWordsOneButton, fiveWordsThreeButton, fiveWordsTwoButton;
+    @FXML private ToggleButton fourWordsFourButton, fourWordsOneButton, fourWordsThreeButton, fourWordsTwoButton;
+    @FXML private ToggleButton threeWordsOneButton, threeWordsThreeButton, threeWordsTwoButton;
+    @FXML private ToggleButton twoWordsOneButton, twoWordsTwoButton;
+    @FXML private Label questionNumberLabel, timeLabel, wordLabel, hintLabel, timeDescriptionLabel;
+    @FXML private Pane answerPane;
+    @FXML private TextField answerTextField;
     @FXML
-    private Button exitButton;
-
-    @FXML
-    private VBox fiveWordsBox;
-
-    @FXML
-    private VBox fourWordsBox;
-
-    @FXML
-    private Button hintButton;
-
-    @FXML
-    private Button mainMenuButton;
-
-    @FXML
-    private Button nextButton;
-
-    @FXML
-    private Label questionNumberLabel;
-
-    @FXML
-    private Button saveGameButton;
-
-    @FXML
-    private Button settingsButton;
-
-    @FXML
-    private HBox threeWordsBox;
-
-    @FXML
-    private Label timeLabel;
-
-    @FXML
-    private HBox twoWordsBox;
-
-    @FXML
-    private Label wordLabel;
-
-    @FXML
-    private Button fiveWordsFiveButton;
-
-    @FXML
-    private Button fiveWordsFourButton;
-
-    @FXML
-    private Button fiveWordsOneButton;
-
-    @FXML
-    private Button fiveWordsThreeButton;
-
-    @FXML
-    private Button fiveWordsTwoButton;
-
-    @FXML
-    private Button fourWordsFourButton;
-
-    @FXML
-    private Button fourWordsOneButton;
-
-    @FXML
-    private Button fourWordsThreeButton;
-
-    @FXML
-    private Button fourWordsTwoButton;
-
-    @FXML
-    private Button threeWordsOneButton;
-
-    @FXML
-    private Button threeWordsThreeButton;
-
-    @FXML
-    private Button threeWordsTwoButton;
-
-    @FXML
-    private Button twoWordsOneButton;
-
-    @FXML
-    private Button twoWordsTwoButton;
+    private ImageView hintImageView;
 
     private Game game;
     private List<Word> answers;
 
+
     @FXML
     public void initialize() {
         game = Game.getInstance();
-        answers = game.nextWord();
+        game.setTimeUpdateListener(this);
+
 
         switch(game.getDifficulty()){
             case BEGINNER:
@@ -119,22 +62,28 @@ public class WordController {
                 fiveWordsBox.setVisible(true);
                 break;
             case EXPERT:
+                answerPane.setVisible(true);
                 break;
         }
 
         if(game.getMode() == Mode.LEARNING){
             timeLabel.setVisible(false);
             questionNumberLabel.setVisible(false);
+            timeDescriptionLabel.setVisible(false);
         }
         else {
             saveGameButton.setDisable(true);
         }
 
+        answers = game.getAnswers();
+        if(answers == null)
+            answers = game.nextWord();
         setWord(answers.get(answers.size() - 1));
 
 
 
     }
+
 
     void setWord(Word word){
         wordLabel.setText(word.getWord());
@@ -170,9 +119,6 @@ public class WordController {
 
     @FXML
     void answerButtonClicked(ActionEvent event) {
-
-        System.out.println(((Button)event.getSource()).getText());
-
     }
 
     @FXML
@@ -182,30 +128,144 @@ public class WordController {
 
     @FXML
     void hintButtonClicked(ActionEvent event) {
-
+        switch(game.getLanguage()){
+            case POL:
+                hintLabel.setText(game.getHint());
+                break;
+            case ENG:
+                String url = game.getHint();
+                Image image = new Image(url);
+                hintImageView.setImage(image);
+                break;
+        }
     }
 
     @FXML
     void mainMenuButtonClicked(ActionEvent event) throws IOException {
         SceneSwitchUtil.switchScene("main-menu.fxml", (Stage) mainMenuButton.getScene().getWindow());
+    }
+
+    public void nextWord() throws IOException {
+        hintLabel.setText("");
+        hintImageView.setImage(null);
+        answerTextField.clear();
+        answers = game.nextWord();
+        if(answers==null)
+            SceneSwitchUtil.switchScene("end-test.fxml", (Stage) timeLabel.getScene().getWindow());
+        else
+            setWord(answers.get(answers.size() - 1));
 
     }
 
-    @FXML
-    void nextButtonClicked(ActionEvent event) {
-        answers = game.nextWord();
-        setWord(answers.get(answers.size() - 1));
 
+    @FXML
+    void nextButtonClicked(ActionEvent event) throws InterruptedException, IOException {
+
+
+        if(game.getDifficulty() == Difficulty.EXPERT){
+            if(game.getMode() == Mode.LEARNING){
+                String answer = answerTextField.getText();
+                Boolean isCorrect = game.checkAnswer(answer.toLowerCase());
+                if(isCorrect){
+                    nextWord();
+                }
+                else{
+                    answerTextField.getStyleClass().clear();
+                    answerTextField.getStyleClass().add("answer-text-field-wrong");
+                    PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+                    pause.setOnFinished(ev -> {
+                        answerTextField.getStyleClass().clear();
+                        answerTextField.getStyleClass().add("answer-text-field");
+                    });
+                    pause.play();
+                }
+            }
+            else{
+                if(game.checkAnswer(answerTextField.getText().toLowerCase())){
+                    game.addTestCorrectQuestion();
+                }
+                nextWord();
+                questionNumberLabel.setText(game.getTestQuestionIndex() + "/" + TestProgramState.NUMBER_OF_WORDS);
+            }
+
+        }
+        else{
+            ToggleButton selectedButton = (ToggleButton) answerGroup.getSelectedToggle();
+            String answer = selectedButton.getText();
+            Boolean isCorrect = game.checkAnswer(answer);
+
+            switch(game.getMode()){
+                case LEARNING:
+                    if (isCorrect) {
+                        changeButtonStyle(selectedButton, "answer-button-correct");
+                        nextWord();
+                    }
+                    else {
+                        changeButtonStyle(selectedButton, "answer-button-wrong");
+                    }
+                    break;
+                case TEST:
+                    if(isCorrect){
+                        game.addTestCorrectQuestion();
+                    }
+                    nextWord();
+                    questionNumberLabel.setText(game.getTestQuestionIndex() + "/" + TestProgramState.NUMBER_OF_WORDS);
+                    break;
+
+            }
+        }
+
+
+    }
+
+    public void changeButtonStyle(ToggleButton selectedButton, String styleClass) {
+        selectedButton.getStyleClass().clear();
+        selectedButton.getStyleClass().add(styleClass);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        pause.setOnFinished(ev -> {
+            selectedButton.getStyleClass().clear();
+            selectedButton.getStyleClass().add("answer-button");
+        });
+        pause.play();
     }
 
     @FXML
     void saveGameButtonClicked(ActionEvent event) {
+        game.saveGame();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Zapisano grę");
+        alert.setHeaderText(null);
+        alert.setContentText("Gra została zapisana");
+        alert.showAndWait();
 
     }
 
     @FXML
-    void settingsButtonClicked(ActionEvent event) {
+    void settingsButtonClicked(ActionEvent event) throws IOException {
+        SceneSwitchUtil.switchScene("settings.fxml", (Stage) settingsButton.getScene().getWindow());
 
     }
 
+    @Override
+    public void onTimeUpdate(int secondsLeft) {
+        if(secondsLeft != 0){
+            Platform.runLater(() -> {
+                timeLabel.setText(secondsLeft + " s");
+            });
+        }
+        else{
+            Platform.runLater(() -> {
+                try {
+                    SceneSwitchUtil.switchScene("end-test.fxml", (Stage) timeLabel.getScene().getWindow());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+        }
+
+
+    }
 }

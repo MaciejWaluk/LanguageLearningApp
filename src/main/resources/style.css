@@ -27,7 +27,45 @@
     -fx-font-weight: bold;
 }
 
+.answer-button:selected{
+    -fx-background-color: #161616;
+    -fx-text-fill: #FFFFFF;
+}
 
+.answer-button-wrong{
+    -fx-border-radius: 5px;
+    -fx-border-color: RED;
+    -fx-background-color: RED;
+    -fx-text-fill: #161616;
+    -fx-padding: 10px;
+    -fx-font-weight: bold;
+}
+
+.answer-button-correct{
+    -fx-border-radius: 5px;
+    -fx-border-color: GREEN;
+    -fx-background-color: GREEN;
+    -fx-text-fill: #161616;
+    -fx-padding: 10px;
+    -fx-font-weight: bold;
+}
+
+.answer-text-field{
+    -fx-border-radius: 5px;
+    -fx-border-color: #161616;
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #161616;
+    -fx-padding: 10px;
+    -fx-font-weight: bold;
+}
+
+.answer-text-field-wrong{
+    -fx-border-radius: 5px;
+    -fx-border-color: RED;
+    -fx-text-fill: #161616;
+    -fx-padding: 10px;
+    -fx-font-weight: bold;
+}
 .word-frame{
     -fx-background-color: #FFFFFF;
     -fx-border-radius: 15px;

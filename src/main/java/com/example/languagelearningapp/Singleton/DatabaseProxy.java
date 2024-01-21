@@ -100,6 +100,8 @@ public class DatabaseProxy {
         }
     }
 
+
+
 //    public void editWord(int id, Word word){
 //        initializeConnection();
 //        Statement stmt = null;
@@ -111,6 +113,37 @@ public class DatabaseProxy {
 //            System.out.println(e.getMessage());
 //        }
 //    }
+
+    public List<Word> getAllWords(){
+        initializeConnection();
+        Statement stmt = null;
+        List<Word> words = new ArrayList<>();
+        ResultSet rs = null;
+        try {
+            stmt = this.databaseConnection.getConn().createStatement();
+            String sql = "SELECT * FROM words";
+            rs = stmt.executeQuery(sql);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        WordDirector wordDirector = new WordDirector();
+
+        try {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String word = rs.getString("word");
+                String translation = rs.getString("translation");
+                String pronunciation = rs.getString("pronunciation");
+                String language = rs.getString("language");
+                words.add(wordDirector.constructWordWithPronunciation(id, word, translation, language, pronunciation));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return words;
+    }
 
     public List<Word> getWordsByLanguage(String language) {
         initializeConnection();
@@ -140,6 +173,73 @@ public class DatabaseProxy {
         }
 
         return words;
+    }
+
+    public Word getWordWithPronunciation(Word word) {
+        initializeConnection();
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = this.databaseConnection.getConn().createStatement();
+            String sql = "SELECT pronunciation FROM words WHERE id = " + word.getId();
+            rs = stmt.executeQuery(sql);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            if (rs.next()) {
+                word.setPronunciation(rs.getString("pronunciation"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return word;
+    }
+
+    public Word getWordWithImageUrl(Word word){
+        initializeConnection();
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = this.databaseConnection.getConn().createStatement();
+            String sql = "SELECT imageUrl FROM words WHERE id = " + word.getId();
+            rs = stmt.executeQuery(sql);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            if (rs.next()) {
+                word.setImageUrl(rs.getString("imageUrl"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return word;
+    }
+
+    public void saveAllWords(List<Word> words){
+        initializeConnection();
+        Statement stmt = null;
+        try {
+            stmt = this.databaseConnection.getConn().createStatement();
+            String sql = "DELETE FROM words";
+            stmt.executeUpdate(sql);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        for(Word word : words){
+            try {
+                stmt = this.databaseConnection.getConn().createStatement();
+                String sql = "INSERT INTO words (word, translation, language, pronunciation, imageUrl) VALUES ('" + word.getWord() + "', '" + word.getTranslation() + "', '" + word.getLanguage() + "', '" + word.getPronunciation() + "', '" + word.getImageUrl() + "')";
+                stmt.executeUpdate(sql);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
 

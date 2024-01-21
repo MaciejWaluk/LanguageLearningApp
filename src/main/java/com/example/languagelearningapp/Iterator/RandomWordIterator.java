@@ -18,6 +18,10 @@ public class RandomWordIterator implements WordIterator{
         this.words = words;
         Collections.shuffle(this.words);
     }
+
+    public RandomWordIterator() {
+        position = 0;
+    }
     @Override
     public boolean hasNext() {
         return position < words.size();
@@ -30,4 +34,13 @@ public class RandomWordIterator implements WordIterator{
         }
         else throw new IndexOutOfBoundsException("No more words");
     }
+
+    @Override
+    public WordIterator clone(List<Word> wordsList, int position) {
+        RandomWordIterator newIterator = new RandomWordIterator();
+        newIterator.setWords(wordsList);
+        newIterator.setPosition(position);
+        return newIterator;
+    }
+
 }

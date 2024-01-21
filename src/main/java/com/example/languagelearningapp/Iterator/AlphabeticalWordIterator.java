@@ -19,6 +19,10 @@ public class AlphabeticalWordIterator implements WordIterator{
         this.words = words;
         Collections.sort(this.words, Comparator.comparing(Word::getWord));
     }
+
+    public AlphabeticalWordIterator() {
+        position = 0;
+    }
     @Override
     public boolean hasNext() {
         return position < words.size();
@@ -31,4 +35,13 @@ public class AlphabeticalWordIterator implements WordIterator{
         }
         else throw new IndexOutOfBoundsException("No more words");
     }
+
+    @Override
+    public WordIterator clone(List<Word> wordsList, int position) {
+        AlphabeticalWordIterator newIterator = new AlphabeticalWordIterator();
+        newIterator.setWords(wordsList);
+        newIterator.setPosition(position);
+        return newIterator;
+    }
+
 }

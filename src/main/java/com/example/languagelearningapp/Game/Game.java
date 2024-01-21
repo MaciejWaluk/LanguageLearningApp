@@ -1,8 +1,11 @@
 package com.example.languagelearningapp.Game;
 
 import com.example.languagelearningapp.Controllers.SceneSwitchUtil;
+import com.example.languagelearningapp.Memento.GameCaretaker;
+import com.example.languagelearningapp.Memento.GameMemento;
 import com.example.languagelearningapp.Model.Word;
 import com.example.languagelearningapp.Observer.TimeObserver;
+import com.example.languagelearningapp.Observer.TimeUpdateListener;
 import com.example.languagelearningapp.Singleton.DatabaseProxy;
 import com.example.languagelearningapp.State.LanguageState.EnglishToPolishState;
 import com.example.languagelearningapp.State.LanguageState.LanguageState;
@@ -33,6 +36,10 @@ public class Game {
     private LanguageState languageState;
     private ProgramState programState;
     private Stage stage;
+    private TimeUpdateListener timeUpdateListener;
+    private GameCaretaker gameCaretaker;
+    private List<Word> answers;
+
 
     public static Game instance;
 
@@ -41,6 +48,7 @@ public class Game {
         difficulty = Difficulty.BEGINNER;
         mode = Mode.LEARNING;
         language = Language.POL;
+        gameCaretaker = new GameCaretaker();
 
         databaseProxy = new DatabaseProxy();
     }
@@ -52,30 +60,14 @@ public class Game {
         return instance;
     }
 
-
-
-
-
+    public void setTimeUpdateListener(TimeUpdateListener listener) {
+        this.timeUpdateListener = listener;
+    }
 
     public void update(TimeObserver timeObserver) throws IOException {
-        if(programState instanceof TestProgramState) {
-            programState.getResults(); //TODO: implement passing results to the controller
-            SceneSwitchUtil.switchScene("end-test.fxml:", stage);
-
+        if(programState instanceof TestProgramState && timeUpdateListener != null) {
+                timeUpdateListener.onTimeUpdate(timeObserver.getSecondsLeft());
         }
-    }
-
-    public void chooseDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
-
-    }
-
-    public void chooseMode(Mode mode) {
-        this.mode = mode;
-    }
-
-    public void chooseLanguage(LanguageState languageState) {
-        this.languageState = languageState;
     }
 
     public void switchToTestMode(){
@@ -85,6 +77,10 @@ public class Game {
     }
 
     public void startGame(){
+        wordsList = null;
+        currentWordIndex = 0;
+        answers = null;
+
         switch(difficulty) {
             case BEGINNER:
                 answersStrategy = new TwoAnswersStrategy();
@@ -130,12 +126,33 @@ public class Game {
 
     }
 
-    public List<Word> nextWord(){
+    public List<Word> nextWord() {
         Word word = programState.getNextWord();
-        currentWordIndex = wordsList.indexOf(word);
-        List<Word> answers = answersStrategy.createAnswers(word, languageState);;
-        answers.add(word);
-        return answers;
+        if (word==null)
+            return null;
+        else{
+            currentWordIndex = wordsList.indexOf(word);
+            answers = answersStrategy.createAnswers(word, languageState);
+            answers.add(word);
+            return answers;
+        }
+    }
+
+    public int getTestQuestionIndex(){
+        if(programState instanceof TestProgramState)
+            return ((TestProgramState) programState).getTestQuestionIndex();
+        else return 0;
+    }
+
+    public void addTestCorrectQuestion(){
+        if(programState instanceof TestProgramState)
+            ((TestProgramState) programState).addCorrectQuestion();
+    }
+
+    public int getCorrectAnswers(){
+        if(programState instanceof TestProgramState)
+            return ((TestProgramState) programState).getCorrectQuestions();
+        else return 0;
     }
 
 
@@ -143,11 +160,41 @@ public class Game {
         return wordsList.get(currentWordIndex).getTranslation().equals(answer);
     }
 
-    //TODO: Think about how store answers list
+    public String getHint(){
 
-    public void endGame(){
-        //TODO: Implement ending game, saving and displaying result by passing to the view
+        switch(language){
+            case POL:
+                if(wordsList.get(currentWordIndex).getPronunciation() == null){
+                    wordsList.set(currentWordIndex, databaseProxy.getWordWithPronunciation(wordsList.get(currentWordIndex)));
+                }
+                return wordsList.get(currentWordIndex).getPronunciation();
+            case ENG:
+                if(wordsList.get(currentWordIndex).getImageUrl() == null){
+                    wordsList.set(currentWordIndex, databaseProxy.getWordWithImageUrl(wordsList.get(currentWordIndex)));
+                }
+                return wordsList.get(currentWordIndex).getImageUrl();
+            default:
+                return "";
+        }
     }
+
+    public void saveGame(){
+        gameCaretaker.saveState(this);
+    }
+
+    public void restoreFromMemento(GameMemento memento) {
+        this.wordsList = memento.getWordsList();
+        this.currentWordIndex = memento.getCurrentWordIndex();
+        this.difficulty = memento.getDifficulty();
+        this.mode = memento.getMode();
+        this.language = memento.getLanguage();
+        this.answersStrategy = memento.getAnswersStrategy();
+        this.languageState = memento.getLanguageState();
+        this.programState = memento.getProgramState();
+        this.answers = memento.getAnswers();
+    }
+
+
 
 
 

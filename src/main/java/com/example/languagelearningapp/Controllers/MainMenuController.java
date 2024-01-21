@@ -13,27 +13,13 @@ import java.io.IOException;
 
 public class MainMenuController {
 
-    @FXML
-    private Button difficultyButton;
+    @FXML private Button difficultyButton, exitButton, languageButton, modeButton, settingsButton, startButton, loadGameButton;
 
-    @FXML
-    private Button exitButton;
-
-    @FXML
-    private Button languageButton;
-
-    @FXML
-    private Button modeButton;
-
-    @FXML
-    private Button settingsButton;
-
-    @FXML
-    private Button startButton;
 
     private Difficulty difficulty = Difficulty.BEGINNER;
     private Language language = Language.POL;
     private Mode mode = Mode.LEARNING;
+
 
 
     @FXML
@@ -77,6 +63,14 @@ public class MainMenuController {
     }
 
     @FXML
+    void loadGameButtonClicked(ActionEvent event) throws IOException {
+        Game game = Game.getInstance();
+        game.restoreFromMemento(game.getGameCaretaker().restoreState());
+        SceneSwitchUtil.switchScene("word-answer.fxml", (Stage) loadGameButton.getScene().getWindow());
+
+    }
+
+    @FXML
     void languageButtonClicked(ActionEvent event) {
 
         String s = languageButton.getText();
@@ -95,8 +89,6 @@ public class MainMenuController {
                 language = Language.POL;
                 break;
         }
-
-
     }
 
     @FXML
@@ -122,7 +114,8 @@ public class MainMenuController {
     }
 
     @FXML
-    void settingsButtonClicked(ActionEvent event) {
+    void settingsButtonClicked(ActionEvent event) throws IOException {
+        SceneSwitchUtil.switchScene("settings.fxml", (Stage) settingsButton.getScene().getWindow());
 
     }
 

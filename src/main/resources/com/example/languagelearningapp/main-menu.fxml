@@ -8,12 +8,13 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="750.0" styleClass="letfAnchor" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.languagelearningapp.Controllers.MainMenuController">
    <children>
-      <VBox alignment="CENTER" layoutX="242.0" layoutY="150.0" prefHeight="245.0" prefWidth="266.0" spacing="15.0">
+      <VBox alignment="CENTER" layoutX="242.0" layoutY="120.0" prefHeight="245.0" prefWidth="266.0" spacing="15.0">
          <children>
             <Button fx:id="startButton" mnemonicParsing="false" onAction="#startButtonClicked" prefHeight="37.0" prefWidth="200.0" styleClass="menu-button" stylesheets="@../../../style.css" text="Rozpocznij grę" />
             <Button fx:id="modeButton" layoutX="24.0" layoutY="62.0" mnemonicParsing="false" onAction="#modeButtonClicked" prefHeight="37.0" prefWidth="200.0" styleClass="menu-button" stylesheets="@../../../style.css" text="Tryb: Nauka" />
             <Button fx:id="difficultyButton" layoutX="24.0" layoutY="114.0" mnemonicParsing="false" onAction="#difficultyButtonClicked" prefHeight="37.0" prefWidth="200.0" styleClass="menu-button" stylesheets="@../../../style.css" text="Poziom trudności: Początkujący" />
             <Button fx:id="languageButton" layoutX="43.0" layoutY="114.0" mnemonicParsing="false" onAction="#languageButtonClicked" prefHeight="37.0" prefWidth="200.0" styleClass="menu-button" stylesheets="@../../../style.css" text="Polski -&gt; Angielski" />
+            <Button fx:id="loadGameButton" layoutX="43.0" layoutY="171.0" mnemonicParsing="false" onAction="#loadGameButtonClicked" prefHeight="37.0" prefWidth="200.0" styleClass="menu-button" stylesheets="@../../../style.css" text="Wczytaj grę" />
             <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#settingsButtonClicked" prefHeight="37.0" prefWidth="200.0" styleClass="menu-button" stylesheets="@../../../style.css" text="Ustawienia" />
             <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonClicked" prefHeight="37.0" prefWidth="200.0" styleClass="menu-button" stylesheets="@../../../style.css" text="Wyjdź" />
          </children>

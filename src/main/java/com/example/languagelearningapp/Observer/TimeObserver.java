@@ -1,6 +1,7 @@
 package com.example.languagelearningapp.Observer;
 
 import com.example.languagelearningapp.Game.Game;
+import lombok.Getter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class TimeObserver implements ActionListener {
 
     private List<Game> observers;
@@ -15,7 +17,7 @@ public class TimeObserver implements ActionListener {
 
     public TimeObserver(int wordsAmount) {
         observers = new ArrayList<>();
-        secondsLeft = 20 * wordsAmount;
+        secondsLeft = 10 * wordsAmount;
     }
 
     public void addObserver(Game observer) {
@@ -34,13 +36,11 @@ public class TimeObserver implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (secondsLeft == 0) {
-            try {
-                notifyObservers();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+        secondsLeft--;
+        try {
+            notifyObservers();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
-        else secondsLeft--;
     }
 }

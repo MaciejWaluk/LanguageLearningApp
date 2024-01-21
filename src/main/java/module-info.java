@@ -8,8 +8,9 @@ module com.example.languagelearningapp {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
-//    requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+
+    requires com.google.gson;
 
     requires java.sql;
     requires org.xerial.sqlitejdbc;
@@ -23,4 +24,7 @@ module com.example.languagelearningapp {
 
     exports com.example.languagelearningapp.Controllers to javafx.fxml;
     opens com.example.languagelearningapp.Controllers to javafx.fxml;
+
+    opens com.example.languagelearningapp.Model to javafx.base, javafx.fxml;
+
 }
