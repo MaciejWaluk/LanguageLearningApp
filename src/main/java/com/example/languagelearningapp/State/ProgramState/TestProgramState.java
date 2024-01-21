@@ -12,7 +12,7 @@ import java.util.List;
 public class TestProgramState implements ProgramState {
 
     public static final int NUMBER_OF_WORDS = 20;
-    private int correctQuestions;
+    private int correctQuestionsCount;
 
     private TimeObserver timeObserver;
     private RandomWordIterator randomWordIterator;
@@ -22,7 +22,7 @@ public class TestProgramState implements ProgramState {
         this.timeObserver = timeObserver;
         this.wordsList = wordsList;
         randomWordIterator = new RandomWordIterator(wordsList);
-        correctQuestions = 0;
+        correctQuestionsCount = 0;
     }
 
     public int getTestQuestionIndex() {
@@ -34,7 +34,6 @@ public class TestProgramState implements ProgramState {
         timer.start();
     }
 
-
     @Override
     public Word getNextWord() {
         if(randomWordIterator.getPosition() < NUMBER_OF_WORDS)
@@ -43,11 +42,7 @@ public class TestProgramState implements ProgramState {
     }
 
     public void addCorrectQuestion() {
-        correctQuestions++;
+        correctQuestionsCount++;
     }
 
-    @Override
-    public void getResults() {
-
-    }
 }

@@ -2,6 +2,7 @@ package com.example.languagelearningapp.Controllers;
 
 import com.example.languagelearningapp.Game.Game;
 import com.example.languagelearningapp.State.ProgramState.TestProgramState;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -32,7 +33,7 @@ public class EndTestController {
 
     @FXML
     void quitButtonClicked(ActionEvent event) {
-
+        Platform.exit();
     }
 
 }

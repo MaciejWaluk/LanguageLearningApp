@@ -1,7 +1,5 @@
 package com.example.languagelearningapp.Game;
 
-import com.example.languagelearningapp.Builder.WordBuilder;
-import com.example.languagelearningapp.Controllers.SceneSwitchUtil;
 import com.example.languagelearningapp.Memento.GameCaretaker;
 import com.example.languagelearningapp.Memento.GameMemento;
 import com.example.languagelearningapp.Model.Word;
@@ -16,7 +14,6 @@ import com.example.languagelearningapp.State.ProgramState.ProgramState;
 import com.example.languagelearningapp.State.ProgramState.TestProgramState;
 import com.example.languagelearningapp.Strategy.*;
 import javafx.stage.Stage;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -51,7 +48,6 @@ public class Game {
         mode = Mode.LEARNING;
         language = Language.POL;
         gameCaretaker = new GameCaretaker();
-
         databaseProxy = new DatabaseProxy();
     }
 
@@ -149,7 +145,7 @@ public class Game {
 
     public int getCorrectAnswers(){
         if(programState instanceof TestProgramState)
-            return ((TestProgramState) programState).getCorrectQuestions();
+            return ((TestProgramState) programState).getCorrectQuestionsCount();
         else return 0;
     }
 

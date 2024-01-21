@@ -32,8 +32,6 @@ public class DatabaseProxy {
             System.out.println(e.getMessage());
         }
 
-        WordDirector wordDirector = new WordDirector();
-
         try {
             while (rs.next()) {
                 int id = rs.getInt("id");

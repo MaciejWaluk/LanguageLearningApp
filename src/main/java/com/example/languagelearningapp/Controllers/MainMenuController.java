@@ -4,6 +4,7 @@ import com.example.languagelearningapp.Game.Difficulty;
 import com.example.languagelearningapp.Game.Game;
 import com.example.languagelearningapp.Game.Language;
 import com.example.languagelearningapp.Game.Mode;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -60,7 +61,7 @@ public class MainMenuController implements Alerts{
 
     @FXML
     void exitButtonClicked(ActionEvent event) {
-
+        Platform.exit();
     }
 
     @FXML

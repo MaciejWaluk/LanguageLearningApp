@@ -40,33 +40,33 @@
             </VBox>
             <HBox fx:id="twoWordsBox" alignment="CENTER" layoutX="18.0" layoutY="226.0" prefHeight="37.0" prefWidth="353.0" spacing="15.0" visible="false">
                <children>
-                  <ToggleButton fx:id="twoWordsOneButton" mnemonicParsing="false" onAction="#answerButtonClicked" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton">
+                  <ToggleButton fx:id="twoWordsOneButton" mnemonicParsing="false" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton">
                      <toggleGroup>
                         <ToggleGroup fx:id="answerGroup" />
                      </toggleGroup>
                   </ToggleButton>
-                  <ToggleButton fx:id="twoWordsTwoButton" layoutX="256.0" layoutY="11.0" mnemonicParsing="false" onAction="#answerButtonClicked" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
+                  <ToggleButton fx:id="twoWordsTwoButton" layoutX="256.0" layoutY="11.0" mnemonicParsing="false" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
                </children>
             </HBox>
             <HBox fx:id="threeWordsBox" alignment="CENTER" layoutX="19.0" layoutY="226.0" prefHeight="37.0" prefWidth="353.0" spacing="15.0" visible="false">
                <children>
-                  <ToggleButton fx:id="threeWordsOneButton" mnemonicParsing="false" onAction="#answerButtonClicked" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
-                  <ToggleButton fx:id="threeWordsTwoButton" layoutX="303.0" layoutY="10.0" mnemonicParsing="false" onAction="#answerButtonClicked" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
-                  <ToggleButton fx:id="threeWordsThreeButton" layoutX="311.0" layoutY="10.0" mnemonicParsing="false" onAction="#answerButtonClicked" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
+                  <ToggleButton fx:id="threeWordsOneButton" mnemonicParsing="false" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
+                  <ToggleButton fx:id="threeWordsTwoButton" layoutX="303.0" layoutY="10.0" mnemonicParsing="false" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
+                  <ToggleButton fx:id="threeWordsThreeButton" layoutX="311.0" layoutY="10.0" mnemonicParsing="false" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
                </children>
             </HBox>
             <VBox fx:id="fourWordsBox" layoutX="15.0" layoutY="177.0" spacing="10.0" visible="false">
                <children>
                   <HBox alignment="CENTER" prefHeight="37.0" prefWidth="353.0" spacing="15.0">
                      <children>
-                        <ToggleButton fx:id="fourWordsOneButton" mnemonicParsing="false" onAction="#answerButtonClicked" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
-                        <ToggleButton fx:id="fourWordsTwoButton" mnemonicParsing="false" onAction="#answerButtonClicked" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
+                        <ToggleButton fx:id="fourWordsOneButton" mnemonicParsing="false" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
+                        <ToggleButton fx:id="fourWordsTwoButton" mnemonicParsing="false" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="353.0" spacing="15.0">
                      <children>
-                        <ToggleButton fx:id="fourWordsThreeButton" mnemonicParsing="false" onAction="#answerButtonClicked" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
-                        <ToggleButton fx:id="fourWordsFourButton" mnemonicParsing="false" onAction="#answerButtonClicked" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
+                        <ToggleButton fx:id="fourWordsThreeButton" mnemonicParsing="false" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
+                        <ToggleButton fx:id="fourWordsFourButton" mnemonicParsing="false" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
                      </children>
                   </HBox>
                </children>
@@ -75,15 +75,15 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="37.0" prefWidth="353.0" spacing="15.0">
                      <children>
-                        <ToggleButton fx:id="fiveWordsOneButton" mnemonicParsing="false" onAction="#answerButtonClicked" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
-                        <ToggleButton fx:id="fiveWordsTwoButton" mnemonicParsing="false" onAction="#answerButtonClicked" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
-                        <ToggleButton fx:id="fiveWordsThreeButton" mnemonicParsing="false" onAction="#answerButtonClicked" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
+                        <ToggleButton fx:id="fiveWordsOneButton" mnemonicParsing="false" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
+                        <ToggleButton fx:id="fiveWordsTwoButton" mnemonicParsing="false" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
+                        <ToggleButton fx:id="fiveWordsThreeButton" mnemonicParsing="false" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="37.0" prefWidth="353.0" spacing="15.0">
                      <children>
-                        <ToggleButton fx:id="fiveWordsFourButton" mnemonicParsing="false" onAction="#answerButtonClicked" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
-                        <ToggleButton fx:id="fiveWordsFiveButton" mnemonicParsing="false" onAction="#answerButtonClicked" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
+                        <ToggleButton fx:id="fiveWordsFourButton" mnemonicParsing="false" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
+                        <ToggleButton fx:id="fiveWordsFiveButton" mnemonicParsing="false" styleClass="answer-button" stylesheets="@../../../style.css" text="ToggleButton" toggleGroup="$answerGroup" />
                      </children>
                   </HBox>
                </children>

@@ -121,12 +121,8 @@ public class WordController implements TimeUpdateListener, Alerts {
 
 
     @FXML
-    void answerButtonClicked(ActionEvent event) {
-    }
-
-    @FXML
     void exitButtonClicked(ActionEvent event) {
-
+        Platform.exit();
     }
 
     @FXML

@@ -9,6 +9,5 @@ import java.util.List;
 public interface ProgramState {
 
     public Word getNextWord();
-    public void getResults();
 
 }

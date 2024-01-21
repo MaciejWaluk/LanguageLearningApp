@@ -4,6 +4,7 @@ import com.example.languagelearningapp.Builder.WordDirector;
 import com.example.languagelearningapp.Game.Game;
 import com.example.languagelearningapp.Model.Word;
 import com.example.languagelearningapp.Singleton.DatabaseProxy;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -85,7 +86,7 @@ public class SettingsController implements Alerts{
 
     @FXML
     void exitButtonClicked(ActionEvent event) {
-
+        Platform.exit();
     }
 
     @FXML

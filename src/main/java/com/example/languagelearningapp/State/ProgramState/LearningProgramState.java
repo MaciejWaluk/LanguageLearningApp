@@ -35,9 +35,4 @@ public class LearningProgramState implements ProgramState{
         return wordIterator.next();
     }
 
-    @Override
-    public void getResults() {
-
-    }
-
 }
