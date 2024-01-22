@@ -36,6 +36,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
+                  <ImageView fx:id="hintImageView" fitHeight="86.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </VBox>
             <HBox fx:id="twoWordsBox" alignment="CENTER" layoutX="18.0" layoutY="226.0" prefHeight="37.0" prefWidth="353.0" spacing="15.0" visible="false">
@@ -93,11 +94,6 @@
                   <TextField fx:id="answerTextField" prefHeight="26.0" prefWidth="315.0" promptText="Podaj odpowiedź..." styleClass="answer-text-field" stylesheets="@../../../style.css" />
                </children>
             </Pane>
-            <HBox alignment="CENTER" layoutX="139.0" layoutY="69.0">
-               <children>
-                  <ImageView fx:id="hintImageView" fitHeight="86.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </HBox>
          </children>
       </AnchorPane>
       <HBox alignment="CENTER" layoutX="313.0" layoutY="422.0" prefHeight="37.0" prefWidth="353.0" spacing="20.0">

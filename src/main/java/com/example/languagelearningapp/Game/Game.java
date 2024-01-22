@@ -117,7 +117,6 @@ public class Game {
             ((TestProgramState) programState).startTimer();
 
 
-
     }
 
     public List<Word> nextWord() {

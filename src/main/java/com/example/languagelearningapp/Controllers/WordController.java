@@ -151,7 +151,10 @@ public class WordController implements TimeUpdateListener, Alerts {
         answers = game.nextWord();
         if(answers==null) {
             try {
-                SceneSwitchUtil.switchScene("end-test.fxml", (Stage) timeLabel.getScene().getWindow());
+                if(game.getMode() == Mode.TEST)
+                    SceneSwitchUtil.switchScene("end-test.fxml", (Stage) timeLabel.getScene().getWindow());
+                else
+                    SceneSwitchUtil.switchScene("main-menu.fxml", (Stage) timeLabel.getScene().getWindow());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
