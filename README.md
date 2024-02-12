@@ -1,7 +1,7 @@
 
 # LanguageLearningApp
 
-LanguageLearningApp is a desktop applications created to help with learning Polish-English and English-Polish word pairs.
+LanguageLearningApp is a desktop applications created to help with learning Polish-English and English-Polish word pairs. It was created mainly to learn how to use design pattern in an actual project.
 
 
 
