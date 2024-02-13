@@ -43,6 +43,13 @@ Hard - choose one word out of five
 
 Expert - provide the word by writing it in the input box
 
+
+## Setup
+
+For the application to run work properly, the device needs to be connected to the internet in order to show images.
+
+To start the app, run the .jar executable file.
+
 ## Screenshots
 
 ![App Screenshot](https://res.cloudinary.com/dympkaqkj/image/upload/v1707857582/pff60udb3r63ttdhxq0t.png) 
@@ -56,12 +63,3 @@ Expert - provide the word by writing it in the input box
 ![App Screenshot](https://res.cloudinary.com/dympkaqkj/image/upload/v1707857581/zabas2mthqvlvreie34k.png) 
 
 ![App Screenshot](https://res.cloudinary.com/dympkaqkj/image/upload/v1707857581/yhatngpbgjouirqqat0a.png) 
-
-
-
-
-## Setup
-
-For the application to run work properly, the device needs to be connected to the internet in order to show images.
-
-To start the app, run the .jar executable file.
