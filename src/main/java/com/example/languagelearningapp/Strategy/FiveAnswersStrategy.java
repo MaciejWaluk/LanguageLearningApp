@@ -19,6 +19,5 @@ public class FiveAnswersStrategy implements AnswersStrategy{
         result.add(word);
         Collections.shuffle(result);
         return result;
-
     }
 }

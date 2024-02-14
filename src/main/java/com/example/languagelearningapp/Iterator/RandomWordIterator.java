@@ -22,6 +22,7 @@ public class RandomWordIterator implements WordIterator{
     public RandomWordIterator() {
         position = 0;
     }
+
     @Override
     public boolean hasNext() {
         return position < words.size();
